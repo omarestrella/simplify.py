@@ -1,3 +1,3 @@
-### Simplify.py
+### simplify.py
 
-Simplify.py is a simple port of Simplify.js by Vladimir Agafonkin ([https://github.com/mourner/simplify-js](https://github.com/mourner/simplify-js))
+simplify.py is a simple port of simplify.js by Vladimir Agafonkin ([https://github.com/mourner/simplify-js](https://github.com/mourner/simplify-js))
