@@ -1,9 +1,11 @@
+# Square distance between two points
 def getSquareDistance(p1, p2):
     dx = p1['x'] - p2['x']
     dy = p1['y'] - p2['y']
     
     return dx * dx + dy * dy
 
+# Square distance between point and a segment
 def getSquareSegmentDistance(p, p1, p2):
     x = p1['x']
     y = p1['y']
@@ -21,17 +23,17 @@ def getSquareSegmentDistance(p, p1, p2):
             x += dx * t;
             y += dy * t;
 
-        dx = p['x'] - x
-        dy = p['y'] - y
+    dx = p['x'] - x
+    dy = p['y'] - y
 
-        return dx * dx + dy * dy
+    return dx * dx + dy * dy
 
 def simplifyRadialDistance(points, tolerance):
     length = len(points)
     prev_point = points[0]
     new_points = [prev_point]
 
-    for i in range(length - 1):
+    for i in range(length):
         point = points[i]
 
         if getSquareDistance(point, prev_point) > tolerance:
@@ -61,7 +63,7 @@ def simplifyDouglasPeucker(points, tolerance):
     while last:
         max_sqdist = 0
 
-        for i in range(first + 1, last):
+        for i in range(first, last):
             sqdist = getSquareSegmentDistance(points[i], points[first], points[last])
 
             if sqdist > max_sqdist:
@@ -77,26 +79,34 @@ def simplifyDouglasPeucker(points, tolerance):
             first_stack.append(index)
             last_stack.append(last)
 
+        # Can pop an empty array in Javascript, but not Python, so check
+        # the length of the list first
         if len(first_stack) == 0:
-            break
-        
-        first = first_stack.pop()
-        last = last_stack.pop()
+            first = None
+        else:
+            first = first_stack.pop()
+
+        if len(last_stack) == 0:
+            last = None
+        else:
+            last = last_stack.pop()
 
     for i in range(length):
         if markers[i]:
-            new_points.insert(0, points[i])
+            new_points.append(points[i])
 
     return new_points
 
 def simplify(points, tolerance, highestQuality):
-    if not highestQuality:
-        points = simplifyRadialDistance(points, tolerance)
+    sqtolerance = tolerance * tolerance;
 
-    points = simplifyDouglasPeucker(points, tolerance)
-    print len(points)
+    if not highestQuality:
+        points = simplifyRadialDistance(points, sqtolerance)
+
+    points = simplifyDouglasPeucker(points, sqtolerance)
 
     return points
+    #return points[::-1]
 
 
 
