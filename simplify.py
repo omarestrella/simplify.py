@@ -1,12 +1,19 @@
-# Square distance between two points
+
+
 def getSquareDistance(p1, p2):
+    """
+    Square distance between two points
+    """
     dx = p1['x'] - p2['x']
     dy = p1['y'] - p2['y']
-    
+
     return dx * dx + dy * dy
 
-# Square distance between point and a segment
+
 def getSquareSegmentDistance(p, p1, p2):
+    """
+    Square distance between point and a segment
+    """
     x = p1['x']
     y = p1['y']
 
@@ -17,16 +24,17 @@ def getSquareSegmentDistance(p, p1, p2):
         t = ((p['x'] - x) * dx + (p['y'] - y) * dy) / (dx * dx + dy * dy)
 
         if t > 1:
-            x = p2['x'];
-            y = p2['y'];
+            x = p2['x']
+            y = p2['y']
         elif t > 0:
-            x += dx * t;
-            y += dy * t;
+            x += dx * t
+            y += dy * t
 
     dx = p['x'] - x
     dy = p['y'] - y
 
     return dx * dx + dy * dy
+
 
 def simplifyRadialDistance(points, tolerance):
     length = len(points)
@@ -45,9 +53,10 @@ def simplifyRadialDistance(points, tolerance):
 
     return new_points
 
+
 def simplifyDouglasPeucker(points, tolerance):
     length = len(points)
-    markers = [0] * length # Maybe not the most efficent way?
+    markers = [0] * length  # Maybe not the most efficent way?
 
     first = 0
     last = length - 1
@@ -71,7 +80,7 @@ def simplifyDouglasPeucker(points, tolerance):
                 max_sqdist = sqdist
 
         if max_sqdist > tolerance:
-            markers[index] = 1;
+            markers[index] = 1
 
             first_stack.append(first)
             last_stack.append(index)
@@ -97,8 +106,9 @@ def simplifyDouglasPeucker(points, tolerance):
 
     return new_points
 
-def simplify(points, tolerance, highestQuality):
-    sqtolerance = tolerance * tolerance;
+
+def simplify(points, tolerance=0.1, highestQuality=True):
+    sqtolerance = tolerance * tolerance
 
     if not highestQuality:
         points = simplifyRadialDistance(points, sqtolerance)
@@ -106,8 +116,3 @@ def simplify(points, tolerance, highestQuality):
     points = simplifyDouglasPeucker(points, sqtolerance)
 
     return points
-    #return points[::-1]
-
-
-
-
