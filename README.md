@@ -14,4 +14,4 @@ simplify(points, tolerance, highQuality)
 
 `tolerance (optional, 0.1 by default)`: Affects the amount of simplification that occurs (the smaller, the less simplification).
 
-`highestQuality (options, True by default)`: Flag to exclude the distance pre-processing. Produces higher quality results, but runs slower.
+`highestQuality (optional, True by default)`: Flag to exclude the distance pre-processing. Produces higher quality results, but runs slower.
